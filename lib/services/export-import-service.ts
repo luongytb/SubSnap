@@ -1,4 +1,4 @@
-import type { Subscription } from "../types";
+import type { RecurringDuration, Subscription } from "../types";
 import { getSubscriptionRepository } from "./subscription-service";
 
 export interface ExportData {
@@ -105,7 +105,7 @@ export async function importSubscriptions(
                 }))
               : undefined,
             currency: sub.currency,
-            recurringDuration: sub.recurringDuration,
+            recurringDuration: sub.recurringDuration as RecurringDuration,
             startDate: new Date(sub.startDate),
           };
         } catch (error) {
