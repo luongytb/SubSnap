@@ -10,6 +10,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { PromoBox } from "@/components/promo-box";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,6 +66,7 @@ export default function RootLayout({
             </div>
           </header>
           {children}
+          <PromoBox />
         </body>
       </html>
     </ClerkProvider>
