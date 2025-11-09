@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import type { RecurringDuration, Subscription } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -89,6 +90,7 @@ export function EditSubscriptionDialog({
     new Date(subscription.startDate)
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const prevSubscriptionIdRef = useRef(subscription.id);
 
   useEffect(() => {
@@ -176,39 +178,45 @@ export function EditSubscriptionDialog({
       return;
     }
 
-    const chargesArray = useMultipleCharges
-      ? charges
-          .filter((c) => c.amount.trim() !== "")
-          .map((c) => ({
-            amount: Number.parseFloat(c.amount),
-            dayOfMonth: Number.parseInt(c.dayOfMonth, 10),
-            startDate: c.startDate!,
-          }))
-      : undefined;
+    setIsSubmitting(true);
 
-    const totalPrice = useMultipleCharges
-      ? chargesArray!.reduce((sum, c) => sum + c.amount, 0)
-      : Number.parseFloat(price);
+    try {
+      const chargesArray = useMultipleCharges
+        ? charges
+            .filter((c) => c.amount.trim() !== "")
+            .map((c) => ({
+              amount: Number.parseFloat(c.amount),
+              dayOfMonth: Number.parseInt(c.dayOfMonth, 10),
+              startDate: c.startDate!,
+            }))
+        : undefined;
 
-    const earliestStartDate = useMultipleCharges
-      ? chargesArray!.reduce(
-          (earliest, c) => (c.startDate < earliest ? c.startDate : earliest),
-          chargesArray![0].startDate
-        )
-      : startDate!;
+      const totalPrice = useMultipleCharges
+        ? chargesArray!.reduce((sum, c) => sum + c.amount, 0)
+        : Number.parseFloat(price);
 
-    await onUpdate(subscription.id, {
-      title: title.trim(),
-      description: description.trim() || undefined,
-      url: url.trim() || undefined,
-      price: totalPrice,
-      charges: chargesArray,
-      currency,
-      recurringDuration,
-      startDate: earliestStartDate,
-    });
+      const earliestStartDate = useMultipleCharges
+        ? chargesArray!.reduce(
+            (earliest, c) => (c.startDate < earliest ? c.startDate : earliest),
+            chargesArray![0].startDate
+          )
+        : startDate!;
 
-    onOpenChange(false);
+      await onUpdate(subscription.id, {
+        title: title.trim(),
+        description: description.trim() || undefined,
+        url: url.trim() || undefined,
+        price: totalPrice,
+        charges: chargesArray,
+        currency,
+        recurringDuration,
+        startDate: earliestStartDate,
+      });
+
+      onOpenChange(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isValidUrl = (urlString: string) => {
@@ -633,13 +641,23 @@ export function EditSubscriptionDialog({
           </div>
           <DialogFooter>
             <Button
+              disabled={isSubmitting}
               onClick={() => onOpenChange(false)}
               type="button"
               variant="outline"
             >
               Cancel
             </Button>
-            <Button type="submit">Save Changes</Button>
+            <Button disabled={isSubmitting} type="submit">
+              {isSubmitting ? (
+                <>
+                  <Spinner />
+                  Save Changes
+                </>
+              ) : (
+                "Save Changes"
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import type { RecurringDuration, Subscription } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -63,6 +64,7 @@ export function AddSubscriptionDialog({ onAdd }: AddSubscriptionDialogProps) {
     useState<RecurringDuration>("monthly");
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const prevOpenRef = useRef(false);
 
   useEffect(() => {
@@ -131,49 +133,55 @@ export function AddSubscriptionDialog({ onAdd }: AddSubscriptionDialogProps) {
       return;
     }
 
-    const chargesArray = useMultipleCharges
-      ? charges
-          .filter((c) => c.amount.trim() !== "")
-          .map((c) => ({
-            amount: Number.parseFloat(c.amount),
-            dayOfMonth: Number.parseInt(c.dayOfMonth, 10),
-            startDate: c.startDate!,
-          }))
-      : undefined;
+    setIsSubmitting(true);
 
-    const totalPrice = useMultipleCharges
-      ? chargesArray!.reduce((sum, c) => sum + c.amount, 0)
-      : Number.parseFloat(price);
+    try {
+      const chargesArray = useMultipleCharges
+        ? charges
+            .filter((c) => c.amount.trim() !== "")
+            .map((c) => ({
+              amount: Number.parseFloat(c.amount),
+              dayOfMonth: Number.parseInt(c.dayOfMonth, 10),
+              startDate: c.startDate!,
+            }))
+        : undefined;
 
-    const earliestStartDate = useMultipleCharges
-      ? chargesArray!.reduce(
-          (earliest, c) => (c.startDate < earliest ? c.startDate : earliest),
-          chargesArray![0].startDate
-        )
-      : startDate!;
+      const totalPrice = useMultipleCharges
+        ? chargesArray!.reduce((sum, c) => sum + c.amount, 0)
+        : Number.parseFloat(price);
 
-    await onAdd({
-      title: title.trim(),
-      description: description.trim() || undefined,
-      url: url.trim() || undefined,
-      price: totalPrice,
-      charges: chargesArray,
-      currency,
-      recurringDuration,
-      startDate: earliestStartDate,
-    });
+      const earliestStartDate = useMultipleCharges
+        ? chargesArray!.reduce(
+            (earliest, c) => (c.startDate < earliest ? c.startDate : earliest),
+            chargesArray![0].startDate
+          )
+        : startDate!;
 
-    setTitle("");
-    setDescription("");
-    setUrl("");
-    setPrice("");
-    setUseMultipleCharges(false);
-    setCharges([{ amount: "", dayOfMonth: "1", startDate: new Date() }]);
-    setCurrency("USD");
-    setRecurringDuration("monthly");
-    setStartDate(new Date());
-    setErrors({});
-    setOpen(false);
+      await onAdd({
+        title: title.trim(),
+        description: description.trim() || undefined,
+        url: url.trim() || undefined,
+        price: totalPrice,
+        charges: chargesArray,
+        currency,
+        recurringDuration,
+        startDate: earliestStartDate,
+      });
+
+      setTitle("");
+      setDescription("");
+      setUrl("");
+      setPrice("");
+      setUseMultipleCharges(false);
+      setCharges([{ amount: "", dayOfMonth: "1", startDate: new Date() }]);
+      setCurrency("USD");
+      setRecurringDuration("monthly");
+      setStartDate(new Date());
+      setErrors({});
+      setOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isValidUrl = (urlString: string) => {
@@ -606,13 +614,23 @@ export function AddSubscriptionDialog({ onAdd }: AddSubscriptionDialogProps) {
           </div>
           <DialogFooter>
             <Button
+              disabled={isSubmitting}
               onClick={() => setOpen(false)}
               type="button"
               variant="outline"
             >
               Cancel
             </Button>
-            <Button type="submit">Add Subscription</Button>
+            <Button disabled={isSubmitting} type="submit">
+              {isSubmitting ? (
+                <>
+                  <Spinner />
+                  Add Subscription
+                </>
+              ) : (
+                "Add Subscription"
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

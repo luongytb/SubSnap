@@ -29,8 +29,33 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+
+    // Convert date strings to Date objects
+    const subscriptionData = {
+      ...body,
+      startDate:
+        body.startDate instanceof Date
+          ? body.startDate
+          : new Date(body.startDate),
+      charges: body.charges
+        ? body.charges.map(
+            (c: {
+              amount: number;
+              dayOfMonth: number;
+              startDate: string | Date;
+            }) => ({
+              ...c,
+              startDate:
+                c.startDate instanceof Date
+                  ? c.startDate
+                  : new Date(c.startDate),
+            })
+          )
+        : undefined,
+    };
+
     const repository = getSubscriptionRepository();
-    const subscription = await repository.create(userId, body);
+    const subscription = await repository.create(userId, subscriptionData);
     return NextResponse.json(subscription, { status: 201 });
   } catch (error) {
     console.error("Failed to create subscription:", error);

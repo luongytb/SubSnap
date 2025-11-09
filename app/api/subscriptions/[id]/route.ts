@@ -42,8 +42,42 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await request.json();
+
+    // Convert date strings to Date objects if present
+    const updateData: Partial<{
+      title: string;
+      description?: string;
+      url?: string;
+      price: number;
+      charges?: Array<{ amount: number; dayOfMonth: number; startDate: Date }>;
+      currency: string;
+      recurringDuration: string;
+      startDate: Date;
+    }> = { ...body };
+
+    if (body.startDate !== undefined) {
+      updateData.startDate =
+        body.startDate instanceof Date
+          ? body.startDate
+          : new Date(body.startDate);
+    }
+
+    if (body.charges !== undefined) {
+      updateData.charges = body.charges.map(
+        (c: {
+          amount: number;
+          dayOfMonth: number;
+          startDate: string | Date;
+        }) => ({
+          ...c,
+          startDate:
+            c.startDate instanceof Date ? c.startDate : new Date(c.startDate),
+        })
+      );
+    }
+
     const repository = getSubscriptionRepository();
-    const subscription = await repository.update(userId, id, body);
+    const subscription = await repository.update(userId, id, updateData);
     return NextResponse.json(subscription);
   } catch (error) {
     console.error("Failed to update subscription:", error);

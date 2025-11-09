@@ -189,7 +189,7 @@ export function calculateYearlyCost(subscriptions: Subscription[]): number {
 
 export function getUpcomingRenewals(
   subscriptions: Subscription[],
-  daysAhead: number = 30
+  daysAhead = 30
 ): Subscription[] {
   const now = new Date();
   const futureDate = new Date();

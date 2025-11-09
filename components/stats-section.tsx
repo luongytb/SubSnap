@@ -221,8 +221,7 @@ export function StatsSection({ subscriptions }: StatsSectionProps) {
                   ? renewalsThisMonth
                       .slice(0, 2)
                       .map((sub) => sub.title)
-                      .join(", ") +
-                    (renewalsThisMonth.length > 2 ? "..." : "")
+                      .join(", ") + (renewalsThisMonth.length > 2 ? "..." : "")
                   : "No renewals"}
               </p>
             </div>
