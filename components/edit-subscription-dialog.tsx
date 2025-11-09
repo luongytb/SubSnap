@@ -32,6 +32,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import type { RecurringDuration, Subscription } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { SORTED_CURRENCIES, formatCurrencyDisplay } from "@/lib/currencies";
 
 function formatCurrency(amount: number, currency: string): string {
   return new Intl.NumberFormat("en-US", {
@@ -552,13 +553,11 @@ export function EditSubscriptionDialog({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="USD">USD ($)</SelectItem>
-                    <SelectItem value="EUR">EUR (€)</SelectItem>
-                    <SelectItem value="GBP">GBP (£)</SelectItem>
-                    <SelectItem value="CAD">CAD (C$)</SelectItem>
-                    <SelectItem value="AUD">AUD (A$)</SelectItem>
-                    <SelectItem value="JPY">JPY (¥)</SelectItem>
-                    <SelectItem value="INR">INR (₹)</SelectItem>
+                    {SORTED_CURRENCIES.map((currency) => (
+                      <SelectItem key={currency.code} value={currency.code}>
+                        {formatCurrencyDisplay(currency)}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

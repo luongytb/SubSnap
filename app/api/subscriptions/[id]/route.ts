@@ -44,7 +44,6 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
-    // Convert date strings to Date objects if present
     const updateData: Partial<Omit<Subscription, "id" | "createdAt">> = {
       ...body,
     };

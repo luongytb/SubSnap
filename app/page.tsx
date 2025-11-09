@@ -1,12 +1,14 @@
 "use client";
 
 import { SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
+import { useState, useMemo } from "react";
 import { AddSubscriptionDialog } from "@/components/add-subscription-dialog";
 import { ExportImportSection } from "@/components/export-import-section";
 import { StatsSection } from "@/components/stats-section";
 import { SubscriptionCard } from "@/components/subscription-card";
 import { Spinner } from "@/components/ui/spinner";
 import { useSubscriptions } from "@/lib/use-subscriptions";
+import { groupByCurrency } from "@/lib/stats";
 
 export default function Home() {
   const {
@@ -18,6 +20,28 @@ export default function Home() {
   } = useSubscriptions();
 
   const { isLoaded: authLoaded } = useAuth();
+
+  const currencies = useMemo(
+    () => Object.keys(groupByCurrency(subscriptions)),
+    [subscriptions]
+  );
+  
+  const [selectedCurrencyState, setSelectedCurrencyState] = useState<string | null>(() => {
+    const initialCurrencies = Object.keys(groupByCurrency(subscriptions));
+    return initialCurrencies[0] || null;
+  });
+
+  const selectedCurrency = useMemo(() => {
+    if (selectedCurrencyState && currencies.includes(selectedCurrencyState)) {
+      return selectedCurrencyState;
+    }
+    return currencies[0] || null;
+  }, [currencies, selectedCurrencyState]);
+
+  const filteredSubscriptions = useMemo(() => {
+    if (!selectedCurrency) return subscriptions;
+    return subscriptions.filter((sub) => sub.currency === selectedCurrency);
+  }, [subscriptions, selectedCurrency]);
 
   if (!authLoaded || isLoading) {
     return (
@@ -75,10 +99,14 @@ export default function Home() {
               </div>
             ) : subscriptions.length > 0 ? (
               <div className="flex flex-col gap-6">
-                <StatsSection subscriptions={subscriptions} />
+                <StatsSection
+                  subscriptions={subscriptions}
+                  selectedCurrency={selectedCurrency}
+                  onCurrencyChange={setSelectedCurrencyState}
+                />
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {subscriptions
+                  {filteredSubscriptions
                     .sort((a, b) => {
                       const getTime = (
                         date: Date | string | unknown

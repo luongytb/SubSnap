@@ -67,6 +67,10 @@ export default function RootLayout({
           </header>
           {children}
           <PromoBox />
+          <script 
+            defer 
+            src="https://assets.onedollarstats.com/stonks.js"
+          ></script>
         </body>
       </html>
     </ClerkProvider>

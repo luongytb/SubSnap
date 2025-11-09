@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    // Convert date strings to Date objects
     const subscriptionData = {
       ...body,
       startDate:

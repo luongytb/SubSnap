@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -25,6 +23,8 @@ import type { Subscription } from "@/lib/types";
 
 interface StatsSectionProps {
   subscriptions: Subscription[];
+  selectedCurrency: string | null;
+  onCurrencyChange: (currency: string) => void;
 }
 
 function formatCurrency(amount: number, currency: string): string {
@@ -36,22 +36,26 @@ function formatCurrency(amount: number, currency: string): string {
   }).format(amount);
 }
 
-export function StatsSection({ subscriptions }: StatsSectionProps) {
+export function StatsSection({
+  subscriptions,
+  selectedCurrency,
+  onCurrencyChange,
+}: StatsSectionProps) {
   const currencies = Object.keys(groupByCurrency(subscriptions));
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    currencies[0] || "USD"
-  );
 
   const filteredSubscriptions = subscriptions.filter(
     (sub) => sub.currency === selectedCurrency
   );
 
-  if (filteredSubscriptions.length === 0 && subscriptions.length > 0) {
+  if (!selectedCurrency || (filteredSubscriptions.length === 0 && subscriptions.length > 0)) {
     const allCurrencies = currencies.join(", ");
     return (
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-2">
-          <Select onValueChange={setSelectedCurrency} value={selectedCurrency}>
+          <Select
+            onValueChange={onCurrencyChange}
+            value={selectedCurrency || currencies[0] || "USD"}
+          >
             <SelectTrigger className="w-32" id="currency-select">
               <SelectValue />
             </SelectTrigger>
@@ -64,12 +68,14 @@ export function StatsSection({ subscriptions }: StatsSectionProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="rounded-lg border bg-card p-4">
-          <p className="text-muted-foreground text-sm">
-            No subscriptions found in {selectedCurrency}. Available currencies:{" "}
-            {allCurrencies}
-          </p>
-        </div>
+        {filteredSubscriptions.length === 0 && subscriptions.length > 0 && (
+          <div className="rounded-lg border bg-card p-4">
+            <p className="text-muted-foreground text-sm">
+              No subscriptions found in {selectedCurrency}. Available currencies:{" "}
+              {allCurrencies}
+            </p>
+          </div>
+        )}
       </div>
     );
   }
@@ -94,7 +100,10 @@ export function StatsSection({ subscriptions }: StatsSectionProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2">
-        <Select onValueChange={setSelectedCurrency} value={selectedCurrency}>
+        <Select
+          onValueChange={onCurrencyChange}
+          value={selectedCurrency}
+        >
           <SelectTrigger className="w-32" id="currency-select">
             <SelectValue />
           </SelectTrigger>
